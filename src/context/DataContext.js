@@ -28,6 +28,12 @@ export const DataProvider = ({ children }) => {
           return { ...state, data: recipes };
         }
 
+      case "DELETE":
+        const updatedArr = state.data.filter(
+          (item) => item.id !== action.payload
+        );
+        return { ...state, data: updatedArr };
+
       case "ADD_NEW_RECIPE":
         const newArr = [...state.data, action.payload];
         setNewRecipe(() => ({
