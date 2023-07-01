@@ -4,6 +4,9 @@ import { recipes } from "../backend/data";
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
+  const { v4: uuidv4 } = require("uuid");
+  const [showModal, setShowModal] = useState(false);
+
   const [newRecipe, setNewRecipe] = useState({
     id: "",
     name: "",
@@ -35,17 +38,26 @@ export const DataProvider = ({ children }) => {
         return { ...state, data: updatedArr };
 
       case "ADD_NEW_RECIPE":
-        const newArr = [...state.data, action.payload];
-        setNewRecipe(() => ({
-          id: "",
-          name: "",
-          image: "",
-          cuisine: "",
-          ingredients: "",
-          instructions: "",
-        }));
+        const findId = state.data.filter((item) => item.id === newRecipe.id);
+        if (findId.length > 0) {
+          const newData = action.payload;
+          const editUpdatedArr = state.data.map((item) =>
+            item.id === newData.id ? { ...newData } : item
+          );
+          return { ...state, data: editUpdatedArr };
+        } else {
+          const newArr = [...state.data, { ...action.payload, id: uuidv4() }];
+          setNewRecipe(() => ({
+            id: "",
+            name: "",
+            image: "",
+            cuisine: "",
+            ingredients: "",
+            instructions: "",
+          }));
 
-        return { ...state, data: newArr };
+          return { ...state, data: newArr };
+        }
 
       default:
         return state;
@@ -59,7 +71,14 @@ export const DataProvider = ({ children }) => {
 
   return (
     <DataContext.Provider
-      value={{ searchState, searchDispatch, newRecipe, setNewRecipe }}
+      value={{
+        showModal,
+        setShowModal,
+        searchState,
+        searchDispatch,
+        newRecipe,
+        setNewRecipe,
+      }}
     >
       {children}
     </DataContext.Provider>

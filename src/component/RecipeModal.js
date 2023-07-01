@@ -3,16 +3,7 @@ import { MdCancel } from "react-icons/md";
 import { useData } from "../context/DataContext";
 
 export const RecipeModal = ({ setShowModal }) => {
-  const { v4: uuidv4 } = require("uuid");
   const { newRecipe, setNewRecipe, searchDispatch } = useData();
-
-  /*
-          name: "",
-          image: "",
-          cuisine: "",
-          ingredients: "",
-          instructions: "",
-*/
 
   const addDataHandler = () => {
     if (
@@ -24,7 +15,7 @@ export const RecipeModal = ({ setShowModal }) => {
     ) {
       searchDispatch({
         type: "ADD_NEW_RECIPE",
-        payload: { ...newRecipe, id: uuidv4() },
+        payload: { ...newRecipe },
       });
       setShowModal(false);
     } else {
@@ -46,6 +37,7 @@ export const RecipeModal = ({ setShowModal }) => {
             id="name"
             type="text"
             placeholder="Recipe Name"
+            value={newRecipe.name}
             onChange={(e) =>
               setNewRecipe((prev) => ({ ...prev, name: e.target.value }))
             }
@@ -58,6 +50,7 @@ export const RecipeModal = ({ setShowModal }) => {
             id="image"
             type="url"
             placeholder="Image Url"
+            value={newRecipe.image}
             onChange={(e) =>
               setNewRecipe((prev) => ({ ...prev, image: e.target.value }))
             }
@@ -70,6 +63,7 @@ export const RecipeModal = ({ setShowModal }) => {
             id="cuisine"
             type="text"
             placeholder="Cuisine Name"
+            value={newRecipe.cuisine}
             onChange={(e) =>
               setNewRecipe((prev) => ({ ...prev, cuisine: e.target.value }))
             }
@@ -82,6 +76,7 @@ export const RecipeModal = ({ setShowModal }) => {
             id="ingredients"
             type="text"
             placeholder="Recipe Ingredients"
+            value={newRecipe.ingredients}
             onChange={(e) =>
               setNewRecipe((prev) => ({ ...prev, ingredients: e.target.value }))
             }
@@ -94,6 +89,7 @@ export const RecipeModal = ({ setShowModal }) => {
             id="instructions"
             rows={3}
             placeholder="Recipe Instructions steps separated by fullstop"
+            value={newRecipe.instructions}
             onChange={(e) =>
               setNewRecipe((prev) => ({
                 ...prev,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useData } from "../context/DataContext";
 import { Card } from "../component/Card";
 import { Search } from "../component/Search";
@@ -6,8 +6,7 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { RecipeModal } from "../component/RecipeModal";
 
 export const Home = () => {
-  const { searchState } = useData();
-  const [showModal, setShowModal] = useState(false);
+  const { searchState, showModal, setShowModal } = useData();
 
   return (
     <div>
